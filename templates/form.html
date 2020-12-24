@@ -1,7 +1,7 @@
-{%extends "index.html" %} {%block messages%} {%with messages =
+{%extends "index.html" %} {%block alerts%} {%with messages =
 get_flashed_messages()%} {%if messages%} {%for message in messages%}
 <p class="alert alert-danger">{{message}}</p>
-{%endfor%} {%endif%} {%endwith%} {%endblock%} {%endblock%} {%block form%}
+{%endfor%} {%endif%} {%endwith%} {%endblock%} {%block form%}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-4 align-self-center">

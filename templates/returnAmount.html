@@ -1,6 +1,8 @@
 {%extends "index.html" %} {%block return%}
 <p class="alert alert-warning">
-  {{from_currency}} {{amount}} in {{to_currency}} is ${{new_amount}}
+  {{currencies.from_currency["symbol"]}}{{currencies.from_currency["amount"]}}
+  {{currencies.from_currency["name"]}} to {{currencies.to_currency["name"]}} is
+  {{currencies.to_currency["symbol"]}}{{currencies.to_currency["amount"]}}
 </p>
-<button class="btn btn-primary"><a href="/">Home</a></button>
+<a class="btn btn-primary" href="/">Home</a>
 {%endblock%}
