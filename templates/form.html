@@ -1,0 +1,26 @@
+{%extends "index.html" %} {%block messages%} {%with messages =
+get_flashed_messages()%} {%if messages%} {%for message in messages%}
+<p class="alert alert-danger">{{message}}</p>
+{%endfor%} {%endif%} {%endwith%} {%endblock%} {%endblock%} {%block form%}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-4 align-self-center">
+      <form action="/" method="POST">
+        <div class="input-group mb-3 w-100">
+          <span class="input-group-text w-25">FROM</span>
+          <input type="text" class="form-control" name="from" id="from" />
+        </div>
+        <div class="input-group mb-3 w-100">
+          <span class="input-group-text w-25">TO</span>
+          <input type="text" class="form-control" name="to" id="to" />
+        </div>
+        <div class="input-group mb-3 w-100">
+          <span class="input-group-text w-25">AMOUNT</span>
+          <input type="text" class="form-control" name="amount" id="amount" />
+        </div>
+        <input type="submit" value="Convert" class="btn btn-success w-100" />
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock%}
