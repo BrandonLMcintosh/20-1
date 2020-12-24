@@ -23,10 +23,7 @@ class Forex:
         return new_amount
 
     def check_values():
-        #Need to check for: 
-            #valid codes
-            #valid amounts
-
-
-
-    
+        return
+        # Need to check for: 
+        #     valid codes
+        #     valid amounts
