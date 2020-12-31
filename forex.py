@@ -1,23 +1,35 @@
+from logging import error
 from forex_python.converter import CurrencyCodes, CurrencyRates
 class Forex:
     
-    def __init__(self, to_code, from_code, amount):
+    def __init__(self, from_code, to_code, amount):
         self.from_code = from_code
         self.to_code = to_code
-        self.amount = float(amount)
+        self.amount = self.try_float(amount)
+        self.to_amount = self.try_convert(self.from_code, self.to_code, self.amount)
         self.from_currency = self.currency(self.from_code, self.amount)
-        self.to_currency = self.currency(self.to_code, CurrencyRates().convert(self.from_code, self.to_code, self.amount))
+        self.to_currency = self.currency(self.to_code, self.to_amount)
 
     def currency(self, code, amount):
         this_currency = {}
-        this_currency["symbol"] = CurrencyCodes().get_symbol(code) 
-        this_currency["name"] = CurrencyCodes().get_currency_name(code)
+        currency_symbol = CurrencyCodes().get_symbol(code)
+        currency_name = CurrencyCodes().get_currency_name(code)
+        if currency_symbol:
+            this_currency["symbol"] = currency_symbol
+        else:
+            this_currency["symbol"] = "BAD CODE"
+        
+        if currency_name:
+            this_currency["name"] = currency_name
+        else:
+            this_currency["name"] = "BAD CODE"
+
         this_currency["amount"] = amount
         this_currency["code"] = code
         return this_currency
 
     @classmethod
-    def check_values(cls, amount, from_code, to_code):
+    def check_values(cls, from_code, to_code, amount):
         alerts = []
         bad_amount = cls.check_amount(amount)
         bad_from_code = cls.check_code(from_code)
@@ -39,7 +51,7 @@ class Forex:
         try: 
             float(amount)
             pass
-        except ValueError:
+        except:
             return f"Invalid amount '{amount}'. Please use a whole number or decimal greater than 0"
 
     @staticmethod
@@ -48,4 +60,17 @@ class Forex:
             pass
         else:
             return f"Invalid currency code '{code}'. Please verify currency code and try again"
-            
+    
+    def try_float(self, amount):
+        if self.check_amount(amount):
+            amount = 1.0
+        else:
+            amount = float(amount)
+        return amount
+    
+    def try_convert(self, from_code, to_code, amount):
+        try:
+            new_amount = CurrencyRates().convert(from_code, to_code, amount)
+            return new_amount
+        except:
+            return "ERROR: ONE OR MORE BAD CODES"

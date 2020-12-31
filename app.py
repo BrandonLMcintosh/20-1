@@ -14,13 +14,13 @@ def return_amount():
     from_code = request.form["from"]
     to_code = request.form["to"]
     amount = request.form["amount"]
-    errors, needs_redirect = Forex.check_values(amount, from_code, to_code)
+    errors, needs_redirect = Forex.check_values(from_code, to_code, amount)
     if needs_redirect:
         for error in errors:
             if error is not None:
                 flash(error)
         return redirect("/")
-    currencies = Forex(to_code, from_code, amount)
+    currencies = Forex(from_code, to_code, amount)
     return render_template("returnAmount.html", currencies = currencies)
 
 
